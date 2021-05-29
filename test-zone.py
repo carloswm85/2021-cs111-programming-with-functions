@@ -1,1 +1,2 @@
-from PIL import Image
+for _ in range(50):
+	print(_)
