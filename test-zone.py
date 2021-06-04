@@ -1,2 +1,3 @@
-for _ in range(50):
-	print(_)
+import random
+
+random.
