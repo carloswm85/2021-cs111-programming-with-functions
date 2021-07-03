@@ -1,0 +1,4 @@
+For these programs to work properly,
+files named with the 'protected' substring
+should be changed to 'deny' writing and
+reading permissions.

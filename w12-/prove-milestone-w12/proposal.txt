@@ -1,0 +1,46 @@
+Significant Program Proposal
+https://byui-cse.github.io/cse111-course/lesson11/prove.html
+
+(This is a proposal. All proposals are written with our best knowledge
+at the beginning of a project. As we progress from the beginning to the
+end of a project, we gain more knowledge, and some of the ideas we
+proposed change. This is part of completing any project and is fine.
+However, we still must write a proposal so that our teachers or
+supervisors know what we intend to do. Please answer each of the
+following questions to the best of your knowledge.)
+
+1. What is the title of your program?
+> Folder Structure Maker (Probably I'll change the name later)
+
+2. What real world problem will your program address or help to solve?
+> It builds a required folder structure at a given disk location.
+Folder names should be highly customizable. Here's an example:
+
+	FolderRoot
+		Folder1
+			Folder1a
+			Folder1b
+		Folder2
+			...
+		Folder3
+		...
+
+> Adding dates or some other classification information should be
+a feature of the program. I intend to add a GUI, for more friendly
+user usage.
+
+3. What will you learn from developing this program?
+> I'm not sure really. I will find that out. 
+
+4. What Python modules will your program use? (Some examples are: csv,
+datetime, functools, matplotlib, math, pandas, pytest, random, requests,
+and tkinter.)
+> Probably some of these: csv, tkinter or kivy, pytest, datetime, random,
+functools, 
+
+5. Will you separate your Python program into functions that each
+perform a single task?
+> YES
+
+6. Will you write test functions to test many of your program functions?
+> YES
