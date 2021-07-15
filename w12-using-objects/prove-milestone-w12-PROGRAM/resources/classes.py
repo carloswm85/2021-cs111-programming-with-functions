@@ -24,34 +24,41 @@ class Application(tk.Frame):
         self.btn_close = tk.Button(self, text='Close', command=self.quit) #3
 
         # Labels
+        self.lbl_current_location = tk.Label(text='Label')
+        self.lbl_current_location.pack()
 
-        # Label Frames
+        # Label Frame
         self.lbl_frame = LabelFrame(self)
         self.lbl_frame.config(text="Simple Tree Output", height=250, width=250)
-        self.lbl_frame_content = tk.Label(self.lbl_frame)
-        self.lbl_frame_content.config(text='Output')       
+        # Text
+        self.lbl_frame_content = tk.Text(self.lbl_frame)   
+        
+           
 
 
         # GRIDS
-        self.btn_generate_tree.grid() #1
-        self.btn_location.grid() #2
-        self.btn_close.grid() #3
-        self.lbl_frame.grid()
-        self.lbl_frame_content.grid()
+        self.btn_generate_tree.pack()
+        self.btn_location.pack()
+        self.lbl_frame.pack()
+        self.btn_close.pack()
+        self.lbl_frame_content.pack()
 
     def generate_tree(self):
         dirs_main = []
         files_main = []
         location = filedialog.askdirectory()
         for root, dirs, files in os.walk(location):
-            print(root)
-            print(dirs)
             dirs_main.append(dirs)
-            print(files)
             files_main.append(files)
         tree_string = ''.join(str(e) for e in dirs_main)
-        self.lbl_frame_content.config(text=tree_string)
+        tree_string = ''.join(str(e) for e in files_main)
+        self.format_tree(tree_string)
 
+    def format_tree(self, tree):
+        self.insert_tree(tree)
+
+    def insert_tree(self, tree):
+        self.lbl_frame_content.insert("1.0", tree)
 
     def current_location(self):
         location = os.path.realpath('.')

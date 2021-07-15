@@ -1,0 +1,12 @@
+- A list of the function names in your program.
+
+
+- A list of the test function names in your test code.
+
+
+- A list of the documentation that you read, the videos 
+that you watched, and the coding experiments that you tried.
+
+
+- A description or list of the work that you finished on
+your program.
