@@ -1,69 +1,103 @@
-
 import tkinter as tk
-from tkinter import LabelFrame, PanedWindow, Variable, filedialog
-import os
-from typing import Text
+import webbrowser
+from tkinter import Menu, ttk
+from tkinter.messagebox import showerror
 
 
-class Application(tk.Frame):
-
-    def __init__(self, master=None):
-        tk.Frame.__init__(self, master)
-        self.grid()
-        self.create_widgets()
-
-    # frm: a frame (window) widget
-    # lbl: a label widget that displays text for the user to see
-    # ent: an entry widget where a user will type text or numbers
-    # btn: a button widget that the user will click
-    def create_widgets(self):
-
-        # BUTTONS
-        self.btn_generate_tree = tk.Button(self, text='Generate Tree', command=self.generate_tree) #1
-        self.btn_location = tk.Button(self, text='Current Location', command=self.current_location) #2
-        self.btn_close = tk.Button(self, text='Close', command=self.quit) #3
-
-        # Labels
-        self.lbl_current_location = tk.Label(text='Label')
-        self.lbl_current_location.pack()
-
-        # Label Frame
-        self.lbl_frame = LabelFrame(self)
-        self.lbl_frame.config(text="Simple Tree Output", height=250, width=250)
-        # Text
-        self.lbl_frame_content = tk.Text(self.lbl_frame)   
-        
-           
+class TemperatureConverter:
+    @staticmethod
+    def fahrenheit_to_celsius(fahrenheit):
+        return (fahrenheit - 32) * 5 / 9
 
 
-        # GRIDS
-        self.btn_generate_tree.pack()
-        self.btn_location.pack()
-        self.lbl_frame.pack()
-        self.btn_close.pack()
-        self.lbl_frame_content.pack()
+class Window(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
 
-    def generate_tree(self):
-        dirs_main = []
-        files_main = []
-        location = filedialog.askdirectory()
-        for root, dirs, files in os.walk(location):
-            dirs_main.append(dirs)
-            files_main.append(files)
-        tree_string = ''.join(str(e) for e in dirs_main)
-        tree_string = ''.join(str(e) for e in files_main)
-        self.format_tree(tree_string)
+        self.title("About")
+        self.geometry("250x105")
 
-    def format_tree(self, tree):
-        self.insert_tree(tree)
+        self.label = tk.Label(
+            self, text="This program was made\nby Carlos W. Mercado\nas a final project for CSE111 class.\nBYU-I Spring 2021.")
+        self.label.pack()
 
-    def insert_tree(self, tree):
-        self.lbl_frame_content.insert("1.0", tree)
-
-    def current_location(self):
-        location = os.path.realpath('.')
-        print (location)
-        return location
+        self.button = ttk.Button(self, text="Close", command=self.destroy)
+        self.button.pack()
 
 
-    
+class ConverterFrame(ttk.Frame):
+    def __init__(self, container):
+        super().__init__(container)
+
+        # field options
+        options = {'padx': 5, 'pady': 5}
+
+        # Assign the widgets to the self object so that you can reference them in other methods of the ConverterFrame class.
+
+        # MENU
+        self.menu = Menu(self)
+        container.config(menu=self.menu)
+
+        self.helpmenu = Menu(self.menu, tearoff=False)
+
+        self.menu.add_cascade(label='Menu', menu=self.helpmenu)
+
+        self.menu.add_command(label='Exit program', command=self.quit)
+        self.helpmenu.add_command(
+            label='Python Documentation', command=self.openPython)
+        self.helpmenu.add_command(label='About', command=self.aboutWindow)
+
+        # TEMPERATURE
+        # temperature label
+        self.temperature_label = ttk.Label(self, text='Fahrenheit to Celsius')
+        self.temperature_label.grid(column=0, row=0, sticky=tk.W, **options)
+
+        # temperature entry
+        self.temperature = tk.StringVar()  # value holder object
+        self.temperature_entry = ttk.Entry(self, textvariable=self.temperature)
+        self.temperature_entry.grid(column=1, row=0, **options)
+        self.temperature_entry.focus()
+
+        # convert button
+        self.convert_button = ttk.Button(self, text='Convert')
+        # Assign the command option of the convert button to the self.convert method
+        self.convert_button['command'] = self.convert
+        self.convert_button.grid(column=2, row=0, sticky=tk.W, **options)
+
+        # result label
+        self.result_label = ttk.Label(self, text='Result appears here.')
+        self.result_label.grid(row=1, columnspan=3, **options)
+
+        # add padding to the frame and show it
+        self.grid(padx=10, pady=10, sticky=tk.NSEW)
+
+    def convert(self):
+        """
+                Handle button click event.
+                Only numbers are allowed.
+                """
+        try:
+            f = float(self.temperature.get())
+            c = TemperatureConverter.fahrenheit_to_celsius(f)
+            result = f'{f} Fahrenheit = {c:.2f} Celsius'
+            self.result_label.config(text=result)
+        except ValueError as error:
+            error_str = str(error)
+            error_str_beautified = error_str.capitalize() + "\nPlease, use only numbers."
+            showerror(title='Error', message=error_str_beautified)
+
+    def openPython(self):
+        url = 'https://docs.python.org/'
+        webbrowser.open_new(url)
+
+    def aboutWindow(self):
+        window = Window(self)
+        window.grab_set()
+
+
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title('Temperature Converter')
+        self.geometry('365x75')
+        self.resizable(False, False)

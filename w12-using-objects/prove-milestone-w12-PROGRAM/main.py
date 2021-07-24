@@ -1,12 +1,11 @@
-import tkinter as tk
-import resources.classes as cs
-import resources.number_entry as numy
-import math
+from resources.classes import *
+
 
 def main():
-    app = cs.Application()
-    # app.master.title('Folder Structure Drawer')
+    app = App()
+    ConverterFrame(app)
     app.mainloop()
+
 
 if __name__ == "__main__":
     main()
