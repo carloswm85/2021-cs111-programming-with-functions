@@ -1,0 +1,28 @@
+CARLOS MERCADO
+
+- The number of hours that you worked on this project. You should have spent at least six hours during this lesson.
+
+	1 hour.
+	I remade the program starting at week 12.
+	Hepefully the design is more impressive than the functionality.
+
+- A list of the documentation that you read, the videos that you watched, and the coding experiments that you tried.
+
+	I did things I already knew.
+
+- A description or list of the work that you finished on your program.
+
+	Added new methods: celsius_to_fahrenheit, switch_text, and current_state functionality at convert()
+
+	Added: New swtching button for fahrenheit_to_celsius and celsius_to_fahrenheit
+
+	Added: test_celcius_to_farenheit
+
+
+FOLDER STRUCTURE IS:
+
+	program
+		resources
+			classes.py
+			tests.py
+		main.py

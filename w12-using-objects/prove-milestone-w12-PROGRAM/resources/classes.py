@@ -4,10 +4,8 @@ from tkinter import Menu, ttk
 from tkinter.messagebox import showerror
 
 
-class TemperatureConverter:
-    @staticmethod
-    def fahrenheit_to_celsius(fahrenheit):
-        return (fahrenheit - 32) * 5 / 9
+def fahrenheit_to_celsius(fahrenheit):
+    return (fahrenheit - 32) * 5 / 9
 
 
 class Window(tk.Toplevel):
@@ -44,8 +42,8 @@ class ConverterFrame(ttk.Frame):
 
         self.menu.add_command(label='Exit program', command=self.quit)
         self.helpmenu.add_command(
-            label='Python Documentation', command=self.openPython)
-        self.helpmenu.add_command(label='About', command=self.aboutWindow)
+            label='Python Documentation', command=self.open_python)
+        self.helpmenu.add_command(label='About', command=self.about_window)
 
         # TEMPERATURE
         # temperature label
@@ -78,7 +76,8 @@ class ConverterFrame(ttk.Frame):
                 """
         try:
             f = float(self.temperature.get())
-            c = TemperatureConverter.fahrenheit_to_celsius(f)
+            c = fahrenheit_to_celsius(f)
+            print(f'TO CONSOLE: {f} Fahrenheit = {c:.2f} Celsius')
             result = f'{f} Fahrenheit = {c:.2f} Celsius'
             self.result_label.config(text=result)
         except ValueError as error:
@@ -86,11 +85,11 @@ class ConverterFrame(ttk.Frame):
             error_str_beautified = error_str.capitalize() + "\nPlease, use only numbers."
             showerror(title='Error', message=error_str_beautified)
 
-    def openPython(self):
+    def open_python(self):
         url = 'https://docs.python.org/'
         webbrowser.open_new(url)
 
-    def aboutWindow(self):
+    def about_window(self):
         window = Window(self)
         window.grab_set()
 
